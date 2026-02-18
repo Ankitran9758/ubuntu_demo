@@ -1,4 +1,3 @@
-
 name: Deploy LAMP Website to EC2
 
 on:
@@ -17,6 +16,8 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
+          port: 22          # ✅ Add port explicitly
+          timeout: 60s      # ✅ Avoid timeout issues
 
           script: |
             echo "🚀 Connected to EC2 Server"
@@ -26,7 +27,7 @@ jobs:
             echo "📥 Pulling latest code..."
             git pull origin main
 
-            echo "🔄 Restart Apache..."
+            echo "🔄 Restarting Apache..."
             sudo systemctl restart apache2
 
             echo "✅ Deployment Successful!"
